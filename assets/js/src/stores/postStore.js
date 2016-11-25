@@ -14,6 +14,8 @@ function PostStore() {
 
     function addPost(post) {
         posts.push(post)
+        console.log(post)
+        console.log(posts)
         triggerListeners();
     }
 

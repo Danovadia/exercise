@@ -12,16 +12,14 @@ body {
       }
     }
   }
-  #feed {
-    .post {
-        width: 400px;
-        height: 400px;
-        background: #f7f7f7;
-        margin: 20px;
-        padding: 10px;
-        border-radius: 5px;
-        border: 1px solid #d6d6d6;
-        box-shadow: 1px 1px 7px #dedede;
-    }
+  .post {
+    width: 400px;
+    height: 400px;
+    background: #f7f7f7;
+    margin: 20px;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #d6d6d6;
+    box-shadow: 1px 1px 7px #dedede;
   }
 }

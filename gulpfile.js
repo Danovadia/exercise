@@ -27,10 +27,20 @@ gulp.task('compress', function() {
     .pipe(gulp.dest('dist'));
 });
 
+gulp.task('sass', function () {
+  return gulp.src('./assets/styles/main.scss')
+    .pipe(sass().on('error', sass.logError))
+    .pipe(gulp.dest('./dist/css'));
+});
+
+gulp.task('sass:watch', function () {
+  gulp.watch('./assets/styles/main.scss', ['sass']);
+});
+
 gulp.task('server', function() {
   spawn('node', ['index.js'], { stdio: 'inherit' });
 });
 
 gulp.task('default', function(cb) {
-  runSequence('build','compress', 'server', cb);
+  runSequence('build', 'server', 'sass', cb);
 });
