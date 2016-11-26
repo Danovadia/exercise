@@ -82,6 +82,14 @@ var Header = require("./components/Header.jsx");
 
 ReactDOM.render(
   <div>
+    <Header/>
+  </div>,
+  document.getElementById('header')
+);
+
+
+ReactDOM.render(
+  <div>
     <Feed/>
   </div>,
   document.getElementById('root')
