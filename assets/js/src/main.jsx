@@ -1,19 +1,89 @@
 var React = require("react");
 var ReactDOM = require("react-dom");
+var io = require('socket.io-client')
+var ReactCSSTransitionGroup = require('react-addons-css-transition-group')
+
+var ReactMotion = require('react-motion');
+var Motion = ReactMotion.Motion;
 
 var Feed = require("./components/Feed.jsx");
 var Header = require("./components/Header.jsx");
 var postStore = require("./stores/postStore");
-var _posts = postStore.getPosts();
-postStore.onChange(function(posts){
-    _posts = posts;
-    render();
+
+
+var TodoList = React.createClass({
+  getInitialState: function() {
+    return {
+      items: []
+    };
+  },
+  componentWillMount: function(){
+    this.socket = io('http://localhost:3000');
+    this.socket.on('connect', this.connect)
+  },
+  connect: function() {
+    console.log('Connected to server, fetching data...');
+  },
+  addItem: function(e) {
+    var newArray = this.state.items;
+    newArray.unshift(
+      {
+        name: e.name,
+        age: e.age,
+        avatar: e.avatar,
+        key: Date.now()
+      }
+    );
+    this.setState({items:newArray})
+    console.log(itemArray)
+  },
+  render: function() {
+      var self = this;
+      this.socket.on('post', function (data) {
+        self.addItem(data)
+      });
+      return (
+        <div className="todoListMain">
+          <div className="header">
+          </div>
+          <TodoItems entries={this.state.items}/>
+        </div>
+      );
+    }
+});
+
+var TodoItems = React.createClass({
+  render: function() {
+    var todoEntries = this.props.entries;
+    function createTasks(item) {
+      return (
+        <div key={item.key} className="post">
+          <div className="post-header">
+            <div className="post-name"><span>{item.name}</span></div>
+            <div className="post-age"><span>{item.age}</span></div>
+          </div>
+          <div className="post-avatar">
+            <img src={item.avatar} />
+          </div>
+        </div>
+      )
+    }
+    var listItems = todoEntries.map(createTasks);
+    return (
+      <div className="theList">
+        <ReactCSSTransitionGroup className="example" transitionName="example" transitionEnterTimeout={500} transitionLeaveTimeout={300}>
+          {listItems}
+        </ReactCSSTransitionGroup>
+      </div>
+    );
+  }
 });
 
 
-function render(){
-  ReactDOM.render(<Header />, document.getElementById("header"));
-  ReactDOM.render(<Feed posts={_posts}/>, document.getElementById("root"));
-}
 
-render();
+ReactDOM.render(
+  <div>
+    <TodoList/>
+  </div>,
+  document.getElementById('root')
+);

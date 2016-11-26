@@ -13,13 +13,73 @@ body {
     }
   }
   .post {
-    width: 400px;
-    height: 400px;
+    float: left;
+    width: 46%;
+    height: 250px;
     background: #f7f7f7;
-    margin: 20px;
-    padding: 10px;
+    margin: 1%;
+    padding: 1%;
     border-radius: 5px;
     border: 1px solid #d6d6d6;
     box-shadow: 1px 1px 7px #dedede;
+    .post-header {
+      height: 22px;
+      margin-bottom: 4px;
+      border-bottom: 1px #dedede solid;
+      .post-name {
+        float: left;
+        span {
+          font-size: 16px;
+          color: #5288d0;
+          font-style: normal;
+        }
+      }
+      .post-age {
+        float: right;
+        span {
+          font-size: 16px;
+          color: #5288d0;
+          font-style: normal;
+          &:before {
+            content: "Age:";
+            margin-right: 4px;
+            color: #868686;
+            font-size: 11px;
+          }
+        }
+      }
+    }
+    .post-avatar {
+      width: 100%;
+      height: 200px;
+      overflow: hidden;
+      img {
+        width: 100%;
+      }
+    }
   }
+}
+
+li {
+    width: 200px;
+    height: 40px;
+    background: gold;
+    margin: 5px;
+}
+.example-enter {
+  opacity: 0.01;
+}
+
+.example-enter.example-enter-active {
+  opacity: 1;
+  transition: opacity 500ms ease-in;
+}
+
+.example-leave {
+  opacity: 1;
+}
+
+.example-leave.example-leave-active {
+  opacity: 0.01;
+  transition: opacity 300ms ease-in;
 }
