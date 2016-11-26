@@ -1,27 +1,29 @@
 var React = require("react");
 var io = require('socket.io-client')
+var ReactCSSTransitionGroup = require('react-addons-css-transition-group')
 
 var Posts = React.createClass({
-  componentWillMount: function(){
-    this.socket = io('http://localhost:3000');
-    this.socket.on('connect', this.connect)
-  },
-  getInitialState:function(){
-    return {
-        name:"aaa",
-        age:"dsadsa"
+  render: function() {
+    var postEntries = this.props.entries;
+    function pushPosts(post) {
+      return (
+        <div key={post.key} className="post">
+          <div className="post-header">
+            <div className="post-name"><span>{post.name}</span></div>
+            <div className="post-age"><span>{post.age}</span></div>
+          </div>
+          <div className="post-avatar">
+            <img src={post.avatar} />
+          </div>
+        </div>
+      )
     }
-  },
-  render:function(){
+    var listPosts = postEntries.map(pushPosts);
     return (
-      <div className="post">
-        <div className="post-header">
-            <span className="post-name">{this.state.name}</span>
-            <span className="post-age">{this.state.age}</span>
-        </div>
-        <div className="post-avatar">
-          <img src="http://lorempixel.com/300/300"></img>
-        </div>
+      <div className="theList">
+        <ReactCSSTransitionGroup className="example" transitionName="example" transitionEnterTimeout={500} transitionLeaveTimeout={300}>
+          {listPosts}
+        </ReactCSSTransitionGroup>
       </div>
     );
   }
